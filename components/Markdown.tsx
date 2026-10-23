@@ -5,8 +5,10 @@ import remarkMath from "remark-math";
 
 // 顯示 AI 回傳的 Markdown + LaTeX 數學式；inline 用在選項等單行文字
 export default function Markdown({ children, inline = false }: { children: string; inline?: boolean }) {
+  // inline 用 span，才能放進 <p>、<button> 等只能包行內元素的標籤
+  const Wrapper = inline ? "span" : "div";
   return (
-    <div className={inline ? "markdown markdown-inline" : "markdown"}>
+    <Wrapper className={inline ? "markdown markdown-inline" : "markdown"}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}
@@ -14,6 +16,6 @@ export default function Markdown({ children, inline = false }: { children: strin
       >
         {children}
       </ReactMarkdown>
-    </div>
+    </Wrapper>
   );
 }
