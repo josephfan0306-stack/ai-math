@@ -3,19 +3,69 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* 數學筆記本風格：方格紙、墨水藍、螢光筆黃、批改紅 */
+  --paper: #fbfaf5;
+  --card: #ffffff;
+  --ink: #1b2a4e;
+  --ink-soft: #55607a;
+  --grid: rgba(27, 42, 78, 0.07);
+  --rule: rgba(27, 42, 78, 0.14);
+  --marker: #ffe45c;
+  --coral: #ef5b3c;
+  --teal: #1f8a7a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-rule: var(--rule);
+  --color-marker: var(--marker);
+  --color-coral: var(--coral);
+  --color-teal: var(--teal);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-serif-tc), serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --paper: #0f1424;
+    --card: #161d33;
+    --ink: #e8ecf7;
+    --ink-soft: #9aa5c0;
+    --grid: rgba(232, 236, 247, 0.05);
+    --rule: rgba(232, 236, 247, 0.14);
+    --marker: #e8c93a;
+    --coral: #ff7a5c;
+    --teal: #3fc1ad;
+  }
+}
+
+/* 方格紙背景 */
+.graph-paper {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* 螢光筆畫重點 */
+.highlight {
+  background: linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);
+  padding: 0 0.1em;
+}
+@media (prefers-color-scheme: dark) {
+  .highlight {
+    color: #0f1424;
+    background: var(--marker);
+    border-radius: 0.15em;
   }
 }
 
@@ -24,3 +74,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* AI 回傳的 Markdown 講義樣式 */
+.markdown {
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.markdown > * + * {
+  margin-top: 0.75em;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  font-weight: 700;
+  margin-top: 1.4em;
+}
+.markdown h1 { font-size: 1.4rem; }
+.markdown h2 { font-size: 1.25rem; }
+.markdown h3 { font-size: 1.1rem; }
+.markdown ul { list-style: disc; padding-left: 1.5em; }
+.markdown ol { list-style: decimal; padding-left: 1.5em; }
+.markdown li + li { margin-top: 0.25em; }
+.markdown strong { font-weight: 700; }
+.markdown blockquote {
+  border-left: 4px solid #38bdf8;
+  padding: 0.25em 1em;
+  background: color-mix(in srgb, #38bdf8 8%, transparent);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.markdown table { border-collapse: collapse; display: block; overflow-x: auto; }
+.markdown th,
+.markdown td { border: 1px solid #d4d4d8; padding: 0.4em 0.8em; }
+.markdown code { font-family: var(--font-geist-mono), monospace; font-size: 0.9em; }
+/* 長算式在手機上可橫向捲動，不撐破版面 */
+.markdown .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25em 0; }
+.markdown-inline,
+.markdown-inline > span { display: inline; }
